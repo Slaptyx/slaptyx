@@ -155,38 +155,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-
-        /* Like button and count */
-        #like-button {
-            position: fixed;
-            left: 550px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #003a6a;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            z-index: 1001;
-            transition: background-color 0.3s ease;
-        }
-        #like-button:hover {
-            background-color: #003a6a;
-        }
-        #like-count {
-            position: fixed;
-            left: 550px;
-            top: calc(50% + 50px);
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 18px;
-            z-index: 1001;
-        }
     </style>
 </head>
 <body>
@@ -201,7 +169,7 @@
                 <p class="title">Slaptyx</p>
                 <p class="slap">Developer & Designer</p>
                 <p class="slap">Links:</p>
-                <p><a href="https://guns.lol/slaptyx">Guns.lol</a> | <a href="https://www.youtube.com/@slaptyx">YouTube</a> | <a href="https://www.instagram.com/slaptyx/">Instagram</a></p>
+                <p><a href="https://guns.lol/slaptyx">Guns.lol</a> | <a href="https://www.youtube.com/@slaptyx">YouTube</a> | <a href="https://www.instagram.com/slaptyx/">Instagram</a>| <a href="https://slaptyx.github.io/slaptyx2/">Moj Site</a></p>
             </div>
         </div>
         <div class="rain"></div>
@@ -216,15 +184,7 @@
         &copy; 2024 Developed by Slaptyx </a>
     </footer>
 
-    <!-- Like button and count -->
-    <button id="like-button" onclick="like()">Like</button>
-    <div id="like-count">Likes: <span id="like-counter">0</span></div>
-
     <script>
-        let likeCounter = localStorage.getItem('likeCounter') ? parseInt(localStorage.getItem('likeCounter')) : 0;
-
-        document.getElementById('like-counter').textContent = likeCounter;
-
         function enterSite() {
             const overlay = document.getElementById('overlay');
             const content = document.getElementById('content');
@@ -252,12 +212,6 @@
                 drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
                 rain.appendChild(drop);
             }
-        }
-
-        function like() {
-            likeCounter++;
-            localStorage.setItem('likeCounter', likeCounter);
-            document.getElementById('like-counter').textContent = likeCounter;
         }
     </script>
 
