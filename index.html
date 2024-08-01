@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slaptyx</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link za povezivanje sa CSS fajlom -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            cursor: url('cursor.cur'), auto; /* Custom crosshair cursor */
+            background-color: #333; /* Dark gray background color */
+            background-image: url('background.png'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            transition: background-color 0.5s ease;
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 24px;
+            cursor: url('cursor.cur'), auto; /* Custom crosshair cursor */
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        #overlay.fade-out {
+            opacity: 0;
+        }
+        #content {
+            display: none;
+            text-align: left;
+            padding: 20px;
+            color: rgb(255, 255, 255); /* Ensure text color is white */
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        #content.show {
+            display: flex;
+            opacity: 1;
+        }
+        #content .container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        #content img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 60px; /* Rounded corners for image */
+            margin-right: 20px; /* Space between image and text */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        #content img:hover {
+            transform: scale(1.05); /* Slightly enlarge the image on hover */
+        }
+        #content img:active {
+            transform: scale(0.95); /* Slightly shrink the image on click */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Add a glow effect on click */
+        }
+        #content p {
+            margin: 0;
+            font-size: 20px;
+        }
+        #content .title {
+            font-size: 36px; /* Larger font size for 'Slaptyx' */
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        #content .slap {
+            font-size: 20px; /* Larger font size for 'Slaptyx' */
+            font-weight: 600;
+        }
+        
+        /* Style for links */
+        a {
+            color: rgb(224, 224, 224);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: rgb(51, 139, 255);
+        }
+        /* Rain effect */
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .drop {
+            position: absolute;
+            bottom: 100%;
+            width: 1px;
+            height: 80px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        /* Footer styles */
+        footer {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+        footer a {
+            color: rgb(224, 224, 224);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: rgb(51, 139, 255);
+        }
+        /* Song info box */
+        #song-info {
+            position: absolute;
+            top: 10px;
+            right: 850px;
+            padding: 10px;
+            background: rgba(27, 27, 27, 0.8);
+            color: #dadada;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay" onclick="enterSite()">
+        Click to enter
+    </div>
+
+    <div id="content">
+        <div class="container">
+            <img src="slaptyx.png" alt="Slika">
+            <div>      
+                <p class="title">Slaptyx</p>
+                <p class="slap">Developer & Designer</p>
+                <p class="slap">Links:</p>
+                <p><a href="https://guns.lol/slaptyx">Guns.lol</a> | <a href="https://www.youtube.com/@slaptyx">YouTube</a> | <a href="https://www.instagram.com/slaptyx/">Instagram</a></p>
+            </div>
+        </div>
+        <div class="rain"></div>
+    </div>
+    
+    <audio id="background-music" src="muzika.mp3" preload="auto" volume="0.3" loop></audio>
+    
+    <!-- Song info box -->
+    <div id="song-info">Biba - S Puklim Očima (Official Audio)</div>
+
+    <footer>
+        &copy; 2024 Developed by Slaptyx </a>
+    </footer>
+
+    <script>
+        function enterSite() {
+            const overlay = document.getElementById('overlay');
+            const content = document.getElementById('content');
+            const music = document.getElementById('background-music');
+            const songInfo = document.getElementById('song-info');
+            
+            overlay.classList.add('fade-out');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                content.classList.add('show');
+                music.play();
+                createRain();
+                songInfo.style.display = 'block';
+            }, 500); // Match the duration of the fade-out animation
+        }
+
+        function createRain() {
+            const rain = document.querySelector('.rain');
+            const numberOfDrops = 100;
+
+            for (let i = 0; i < numberOfDrops; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                rain.appendChild(drop);
+            }
+        }
+    </script>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
